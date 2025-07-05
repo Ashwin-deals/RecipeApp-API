@@ -1,0 +1,19 @@
+# A configuration file to define how to run multiple containers together
+
+version: "3.9"  # Version of docker file
+
+services:
+  app:
+    build:
+      context: . # The dot builds the docker file inside our current directory. 
+      args:
+        - DEV=true
+    ports:
+      - "8000:8000" # Port 8k in local machine to port 8k inside Docker container
+    volumes:
+      - ./app:/app  # Everything we create inside the container will be saved inside app
+# The command used to run the service
+    command: 
+      sh -c "python manage.py runserver 0.0.0.0:8000"
+
+

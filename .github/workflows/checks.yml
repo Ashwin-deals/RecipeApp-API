@@ -1,0 +1,27 @@
+# For github actions
+
+---
+name: Checks
+
+on: [push]  # Runs everytime the code is pushed to the repository
+
+jobs:       # Is a set of tasks
+  test-lint:
+    name: Test and Lint
+    runs-on: ubuntu-24.04
+    steps:
+
+      # Logs into docker so that it can pull or push docker images if needed
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v4
+
+        # Creates a container based on the file app. And run Django tests inside. And then it deletes the container later
+      - name: Test
+        run: docker compose run --rm app sh -c "python manage.py test"
+      - name: Lint
+        run: docker compose run --rm app sh -c "flake8"

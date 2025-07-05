@@ -1,0 +1,9 @@
+# Linting
+
+[flake8]
+# These files wont be checked for linting errors.
+exclude =
+    migrations,
+    __pycache__,
+    manage.py,
+    settings.py
