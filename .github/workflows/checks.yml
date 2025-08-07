@@ -23,6 +23,7 @@ jobs:       # Is a set of tasks
 
         # Creates a container based on the file app. And run Django tests inside. And then it deletes the container later
       - name: Test
-        run: docker compose run --rm app sh -c "python manage.py test"
+        run: docker compose run --rm app sh -c "python manage.py wait_for_db &&
+                                                python manage.py test"
       - name: Lint
         run: docker compose run --rm app sh -c "flake8"
